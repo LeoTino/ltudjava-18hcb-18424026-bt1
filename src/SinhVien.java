@@ -29,4 +29,8 @@ public class SinhVien {
 	public void setCmnd(String cmnd) {
 		this.cmnd = cmnd;
 	}
+	
+	public void inSinhVien() {
+		System.out.print("MSSV: "+ this.mssv + ", Ho ten: " + this.hoTen + ", Gioi tinh: " + this.gioiTinh + ", CMND: " + this.cmnd);
+	}
 }

@@ -25,4 +25,15 @@ public class Lop {
 		this.tenLop = tenLop;
 	}
 	
+	public void inDanhSachLop() {
+		for (Map<Integer, SinhVien> map : this.danhSach) {
+		    for (Map.Entry<Integer, SinhVien> entry : map.entrySet()) {
+		        int key = entry.getKey();
+		        SinhVien value = entry.getValue();
+		        System.out.print("STT: "+ key +", ");
+		        value.inSinhVien();
+		        System.out.println();
+		    }
+		}
+	}
 }

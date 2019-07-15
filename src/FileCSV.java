@@ -3,6 +3,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FileCSV {
 	private String pathImport;
@@ -12,7 +16,7 @@ public class FileCSV {
 	public Lop importLopCSV() throws FileNotFoundException {
 		Lop kq = new Lop();
 		BufferedReader br = null;
-
+		List dsLop = new ArrayList<>();
         try {   
             br = new BufferedReader(new FileReader(this.pathImport));
 
@@ -23,9 +27,16 @@ public class FileCSV {
             while ((textInALine = br.readLine()) != null) {
                 //System.out.println(textInALine);
                 String[] words = textInALine.split(",");
-                for(String w : words) {
-                	System.out.println(w);
-                }
+                int stt = Integer.parseInt(words[0]);
+                SinhVien sv = new SinhVien();
+                sv.setMssv(Long.parseLong(words[1]));
+                sv.setHoTen(words[2]);
+                sv.setGioiTinh(words[3]);
+                sv.setCmnd(words[4]);
+                
+                Map<Integer,SinhVien> map = new HashMap<>();
+                map.put(stt, sv);
+                dsLop.add(map);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -36,6 +47,7 @@ public class FileCSV {
                 e.printStackTrace();
             }
         }
+        kq.setDanhSach(dsLop);
 		return kq;
 	}
 

@@ -6,6 +6,7 @@ public class Main {
         FileCSV f = new FileCSV();
         f.setPathImport("Lop.csv");
         l = f.importLopCSV();
+        l.inDanhSachLop();
         //System.out.println("tém tém lại giùm cái");
     }
 }
