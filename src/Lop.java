@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -5,7 +6,14 @@ public class Lop {
 	private List<Map<Integer,SinhVien>> danhSach;
 	private String monHoc;
 	private String tenLop;
+	private ThoiKhoaBieu tkb;
 	
+	public ThoiKhoaBieu getTkb() {
+		return tkb;
+	}
+	public void setTkb(ThoiKhoaBieu tkb) {
+		this.tkb = tkb;
+	}
 	public List<Map<Integer, SinhVien>> getDanhSach() {
 		return danhSach;
 	}
@@ -35,5 +43,14 @@ public class Lop {
 		        System.out.println();
 		    }
 		}
+	}
+	
+	public boolean themSinhVien(SinhVien sv) {
+		int stt;
+		stt = this.danhSach.size();
+		Map<Integer, SinhVien> map = new HashMap<>();
+		map.put(stt, sv);
+		this.danhSach.add(map);
+		return true;
 	}
 }
