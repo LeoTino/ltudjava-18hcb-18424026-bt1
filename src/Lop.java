@@ -47,7 +47,7 @@ public class Lop {
 	
 	public boolean themSinhVien(SinhVien sv) {
 		int stt;
-		stt = this.danhSach.size();
+		stt = this.danhSach.size() + 1;
 		Map<Integer, SinhVien> map = new HashMap<>();
 		map.put(stt, sv);
 		this.danhSach.add(map);

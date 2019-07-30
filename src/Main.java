@@ -6,6 +6,9 @@ public class Main {
         FileCSV f = new FileCSV();
         f.setPathImport("Lop.csv");
         l = f.importLopCSV();
+        SinhVien sv =new SinhVien();
+        sv.setHoTen("tét");
+        l.themSinhVien(sv);
         l.inDanhSachLop();
         //System.out.println("tém tém lại giùm cái");
     }
