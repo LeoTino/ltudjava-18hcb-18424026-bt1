@@ -50,6 +50,43 @@ public class FileCSV {
         kq.setDanhSach(dsLop);
 		return kq;
 	}
+	
+	public ThoiKhoaBieu importTKBCSV() throws FileNotFoundException {
+		ThoiKhoaBieu kq = new ThoiKhoaBieu();
+		BufferedReader br = null;
+		List dsMon = new ArrayList<>();
+        try {   
+            br = new BufferedReader(new FileReader(this.pathImport));
+
+            String textInALine;
+            //bo dong dau
+            br.readLine();
+            //STT,MaMon, TenMH, Phong hoc
+            while ((textInALine = br.readLine()) != null) {
+                //System.out.println(textInALine);
+                String[] words = textInALine.split(",");
+                int stt = Integer.parseInt(words[0]);
+                MonHoc mh = new MonHoc();
+                mh.setMaMon(words[1]);
+                mh.setTenMon(words[2]);
+                mh.setPhongHoc(words[3]);
+                
+                Map<Integer,MonHoc> map = new HashMap<>();
+                map.put(stt, mh);
+                dsMon.add(map);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        kq.setDanhSach(dsMon);
+		return kq;
+	}
 
 
 

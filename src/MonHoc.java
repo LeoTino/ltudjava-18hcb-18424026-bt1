@@ -22,4 +22,8 @@ public class MonHoc {
 	public void setPhongHoc(String phongHoc) {
 		this.phongHoc = phongHoc;
 	}
+	
+	public void inMonHoc() {
+		System.out.print("Mã môn học: "+ this.maMon + ", Tên môn học: " + this.tenMon + ", Phòng học: " + this.phongHoc);
+	}
 }
