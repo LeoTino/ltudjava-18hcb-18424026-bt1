@@ -11,6 +11,7 @@ public class Main {
         l.themSinhVien(sv);
         l.inDanhSachLop();
         System.out.println();
+        
         System.out.println("TKB:");
         ThoiKhoaBieu tkb = new ThoiKhoaBieu();
         FileCSV fTKB = new FileCSV();

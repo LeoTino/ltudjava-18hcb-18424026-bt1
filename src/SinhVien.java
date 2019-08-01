@@ -31,6 +31,6 @@ public class SinhVien {
 	}
 	
 	public void inSinhVien() {
-		System.out.print("MSSV: "+ this.mssv + ", Ho ten: " + this.hoTen + ", Gioi tinh: " + this.gioiTinh + ", CMND: " + this.cmnd);
+		System.out.print("MSSV: "+ this.mssv + ", Họ tên: " + this.hoTen + ", Giới tính: " + this.gioiTinh + ", CMND: " + this.cmnd);
 	}
 }
