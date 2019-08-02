@@ -84,6 +84,46 @@ public class FileCSV {
         kq.setDanhSach(dsMon);
 		return kq;
 	}
+	
+	
+	public BangDiem importBangDiemCSV() throws FileNotFoundException {
+		BangDiem kq = new BangDiem();
+		BufferedReader br = null;
+		Map<Integer, Diem> bangDiem = new HashMap<>();
+        try {   
+            br = new BufferedReader(new FileReader(this.pathImport));
+
+            String textInALine;
+            //bo dong dau
+            br.readLine();
+            //STT,MaMon, TenMH, Phong hoc
+            while ((textInALine = br.readLine()) != null) {
+                //System.out.println(textInALine);
+                String[] words = textInALine.split(",");
+                int stt = Integer.parseInt(words[0]);
+                Diem d = new Diem();
+                d.setMssv(Long.parseLong(words[1]));
+                d.setHoTen(words[2]);
+                d.setDiemGK(Double.parseDouble(words[3]));
+                d.setDiemCK(Double.parseDouble(words[4]));
+                d.setDiemKhac(Double.parseDouble(words[5]));
+                d.setTongDiem(Double.parseDouble(words[6]));
+                
+                Map<Integer, Diem> map = new HashMap<>();
+                bangDiem.put(stt, d);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        kq.setDanhSach(bangDiem);
+		return kq;
+	}
 
 
 
