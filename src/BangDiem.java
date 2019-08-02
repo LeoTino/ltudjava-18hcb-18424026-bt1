@@ -10,4 +10,14 @@ public class BangDiem {
 	public void setDanhSach(Map<Integer, Diem> danhSach) {
 		this.danhSach = danhSach;
 	}
+	
+	public void inBangDiem() {
+		for (Map.Entry<Integer, Diem> entry : this.danhSach.entrySet()) {
+		    int key = entry.getKey();
+		    Diem value = entry.getValue();
+		    System.out.print("STT: "+ key +", ");
+		    value.inDiem();
+		    System.out.println();
+		}
+	}
 }

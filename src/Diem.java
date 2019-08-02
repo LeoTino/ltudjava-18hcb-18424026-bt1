@@ -44,4 +44,8 @@ public class Diem {
 	public void setTongDiem(double tongDiem) {
 		this.tongDiem = tongDiem;
 	}
+	
+	public void inDiem() {
+		System.out.print("MSSV: "+ this.mssv + ", Họ tên: " + this.hoTen + ", Điểm GK: " + this.diemCK + ", Điểm CK: " + this.diemCK + ", Điểm khác: " + this.diemKhac + ", Điểm tổng: " + this.tongDiem);;
+	}
 }

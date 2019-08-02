@@ -9,6 +9,7 @@ public class Lop {
 	private String monHoc;
 	private String tenLop;
 	private ThoiKhoaBieu tkb;
+	private BangDiem bd;
 	
 	public ThoiKhoaBieu getTkb() {
 		return tkb;

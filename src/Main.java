@@ -32,6 +32,13 @@ public class Main {
         	System.out.println(temp.getTenLop()+"-"+temp.getMonHoc());
         	temp.inDanhSachLop();
         }
+        
+        //bang diem
+        BangDiem bd = new BangDiem();
+        FileCSV fBangDiem = new FileCSV();
+        fBangDiem.setPathImport("BangDiem.csv");
+        bd = fBangDiem.importBangDiemCSV();
+        bd.inBangDiem();
     }
 	
 	
