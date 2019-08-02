@@ -1,9 +1,11 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Lop {
-	private List<Map<Integer,SinhVien>> danhSach;
+	private Map<Integer,SinhVien> danhSach;
 	private String monHoc;
 	private String tenLop;
 	private ThoiKhoaBieu tkb;
@@ -14,10 +16,11 @@ public class Lop {
 	public void setTkb(ThoiKhoaBieu tkb) {
 		this.tkb = tkb;
 	}
-	public List<Map<Integer, SinhVien>> getDanhSach() {
+
+	public Map<Integer, SinhVien> getDanhSach() {
 		return danhSach;
 	}
-	public void setDanhSach(List<Map<Integer, SinhVien>> danhSach) {
+	public void setDanhSach(Map<Integer, SinhVien> danhSach) {
 		this.danhSach = danhSach;
 	}
 	public String getMonHoc() {
@@ -34,23 +37,21 @@ public class Lop {
 	}
 	
 	public void inDanhSachLop() {
-		for (Map<Integer, SinhVien> map : this.danhSach) {
-		    for (Map.Entry<Integer, SinhVien> entry : map.entrySet()) {
-		        int key = entry.getKey();
-		        SinhVien value = entry.getValue();
-		        System.out.print("STT: "+ key +", ");
-		        value.inSinhVien();
-		        System.out.println();
-		    }
+		for (Map.Entry<Integer, SinhVien> entry : this.danhSach.entrySet()) {
+		    int key = entry.getKey();
+		    SinhVien value = entry.getValue();
+		    System.out.print("STT: "+ key +", ");
+		    value.inSinhVien();
+		    System.out.println();
 		}
 	}
 	
 	public boolean themSinhVien(SinhVien sv) {
 		int stt;
 		stt = this.danhSach.size() + 1;
-		Map<Integer, SinhVien> map = new HashMap<>();
-		map.put(stt, sv);
-		this.danhSach.add(map);
+		this.danhSach.put(stt, sv);
 		return true;
 	}
+	
+	
 }

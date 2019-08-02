@@ -16,7 +16,7 @@ public class FileCSV {
 	public Lop importLopCSV() throws FileNotFoundException {
 		Lop kq = new Lop();
 		BufferedReader br = null;
-		List dsLop = new ArrayList<>();
+		Map<Integer, SinhVien> dsLop = new HashMap<>();
         try {   
             br = new BufferedReader(new FileReader(this.pathImport));
 
@@ -34,9 +34,7 @@ public class FileCSV {
                 sv.setGioiTinh(words[3]);
                 sv.setCmnd(words[4]);
                 
-                Map<Integer,SinhVien> map = new HashMap<>();
-                map.put(stt, sv);
-                dsLop.add(map);
+                dsLop.put(stt, sv);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,7 +52,7 @@ public class FileCSV {
 	public ThoiKhoaBieu importTKBCSV() throws FileNotFoundException {
 		ThoiKhoaBieu kq = new ThoiKhoaBieu();
 		BufferedReader br = null;
-		List dsMon = new ArrayList<>();
+		Map<Integer, MonHoc> dsMon = new HashMap<>();
         try {   
             br = new BufferedReader(new FileReader(this.pathImport));
 
@@ -72,8 +70,7 @@ public class FileCSV {
                 mh.setPhongHoc(words[3]);
                 
                 Map<Integer,MonHoc> map = new HashMap<>();
-                map.put(stt, mh);
-                dsMon.add(map);
+                dsMon.put(stt, mh);
             }
         } catch (IOException e) {
             e.printStackTrace();
