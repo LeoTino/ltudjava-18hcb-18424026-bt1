@@ -27,7 +27,7 @@ public class Main {
         System.out.println();
         List<Lop> dsLop = new ArrayList<>();
         l.setTkb(tkb);
-        dsLop = genLopTheoTkb(l);
+        dsLop = genLopTheoTkb(l, dsLop);
         for(Lop temp : dsLop) {
         	System.out.println(temp.getTenLop()+"-"+temp.getMonHoc());
         	temp.inDanhSachLop();
@@ -35,16 +35,18 @@ public class Main {
     }
 	
 	
-	public static List<Lop> genLopTheoTkb(Lop l){
+	public static List<Lop> genLopTheoTkb(Lop l, List<Lop> ds){
 		List<Lop> kq = new ArrayList<>();
 		ThoiKhoaBieu tkb = l.getTkb();
 		for (Map.Entry<Integer, MonHoc> entry : l.getTkb().getDanhSach().entrySet()) {
-			Lop temp = new Lop();
-			temp.setDanhSach(l.getDanhSach());
-			temp.setTenLop(l.getTenLop());
-	    	MonHoc mh = entry.getValue();
-		    temp.setMonHoc(mh.getMaMon());
-		    kq.add(temp);
+			MonHoc mh = entry.getValue();
+			if(!l.isExist(ds)) {
+				Lop temp = new Lop();
+				temp.setDanhSach(l.getDanhSach());
+				temp.setTenLop(l.getTenLop());
+			    temp.setMonHoc(mh.getMaMon());
+			    kq.add(temp);
+			}
 		}
 		
 		return kq;

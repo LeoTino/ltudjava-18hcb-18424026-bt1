@@ -53,5 +53,14 @@ public class Lop {
 		return true;
 	}
 	
-	
+	public boolean isExist(List<Lop> ds) {
+		boolean kq = false;
+		for(Lop l : ds) {
+			if(this.tenLop.equals(l.tenLop)) {
+				kq = true;
+				break;
+			}
+		}
+		return kq;
+	}
 }
