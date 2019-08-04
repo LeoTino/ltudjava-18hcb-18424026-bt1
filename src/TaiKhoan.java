@@ -7,6 +7,14 @@ import java.util.Scanner;
 public class TaiKhoan {
 	private String username;
 	private String password;
+	private String tenLop;
+	public String getTenLop() {
+		return tenLop;
+	}
+	public void setTenLop(String tenLop) {
+		this.tenLop = tenLop;
+	}
+
 	private String role;
 	public String getRole() {
 		return role;

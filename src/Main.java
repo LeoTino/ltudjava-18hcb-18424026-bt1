@@ -264,6 +264,19 @@ public class Main {
 						isLogOut = true;
 						System.out.println("Đã đăng xuất.");
 						break;
+					case 11:
+						System.out.println("================Giáo vụ===============");
+						System.out.println("============Đổi mật khẩu==============");
+						System.out.println("Nhập password: ");
+						Scanner sc11= new Scanner(System.in);
+						String password = sc11.nextLine();
+						for(TaiKhoan taikhoan : dsTaiKhoan) {
+							if(taikhoan.getUsername().equals(tk.getUsername())) {
+								taikhoan.setPassword(password);
+								System.out.println("Đổi thành công!");
+							}
+						}
+						break;
 					default:
 						System.out.println("Chọn bậy!");
 						break;
@@ -271,7 +284,52 @@ public class Main {
 				}
 			}
 			else if(role == 2) {
-				System.out.println("SV");
+				while(!isLogOut) {
+					System.out.println("================"+ tk.getUsername() +"===============");
+					System.out.println("01. Xem điểm");
+					System.out.println("02. Đăng xuất");
+					System.out.println("03. Đổi mật khẩu");
+					System.out.print("Bạn chọn: ");
+					Scanner input = new Scanner(System.in);
+					int chon = input.nextInt();
+					switch (chon) {
+					case 1:
+						System.out.println("================"+ tk.getUsername() +"===============");
+						System.out.println("==============Xem điểm===============");
+						for(Lop lop : dsLop) {
+							if(lop.getBd() != null) {
+								Iterator<Entry<Integer, Diem>> iter = lop.getBd().getDanhSach().entrySet().iterator();
+								while(iter.hasNext()) {
+									Entry<Integer, Diem> entry = iter.next();
+									Diem diem = entry.getValue();
+									if(diem.getMssv() == Long.parseLong(tk.getUsername())) {
+										System.out.println(lop.getTenLop());
+										diem.inDiem();
+										System.out.println();
+									}
+								}
+							}
+						}
+						break;
+					case 2:
+						isLogOut = true;
+						System.out.println("Đã đăng xuất.");
+						break;
+					case 3:
+						System.out.println("================"+ tk.getUsername() +"===============");
+						System.out.println("============Đổi mật khẩu=============");
+						System.out.println("Nhập password: ");
+						Scanner sc11= new Scanner(System.in);
+						String password = sc11.nextLine();
+						for(TaiKhoan taikhoan : dsTaiKhoan) {
+							if(taikhoan.getUsername().equals(tk.getUsername())) {
+								taikhoan.setPassword(password);
+								System.out.println("Đổi thành công!");
+							}
+						}
+						break;
+					}
+				}
 			}
 			else {
 				System.out.println("Tài khoản không tồn tại. Vui lòng đăng nhập lại!");
