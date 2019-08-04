@@ -93,6 +93,7 @@ public class Main {
 						Scanner sc3 = new Scanner(System.in);
 						String tenLop3 = sc3.nextLine();
 						Lop lTemp = new Lop();
+						boolean check3 = false;
 						if(isExistLop(tenLop3, dsLop)) {
 							ThoiKhoaBieu tkb = new ThoiKhoaBieu(); 
 							FileCSV fTkb = new FileCSV();
@@ -100,6 +101,7 @@ public class Main {
 							tkb = fTkb.importTKBCSV();
 							if(!tkb.getDanhSach().isEmpty()) {
 								System.out.println("Import thành công!");
+								check3 = true;
 								Iterator<Lop> iter = dsLop.iterator();
 								while(iter.hasNext()) {
 									Lop lop = iter.next();
@@ -116,7 +118,9 @@ public class Main {
 						else {
 							System.out.println("Lớp không tồn tại!");
 						}
-						dsLop = genLopTheoTkb(lTemp, dsLop);
+						if(check3 == true) {
+							dsLop = genLopTheoTkb(lTemp, dsLop);
+						}
 						break;
 					case 4:
 						System.out.println("================Giáo vụ===============");
