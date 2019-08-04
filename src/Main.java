@@ -9,13 +9,19 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
-		while (true) {
+		TaiKhoan gv = new TaiKhoan();
+		gv.setUsername("giaovu");
+		gv.setPassword("giaovu");
+		gv.setRole("giaovu");
+		List<Lop> dsLop = new ArrayList<>();
+		List<TaiKhoan> dsTaiKhoan = new ArrayList<>();
+		dsTaiKhoan.add(gv);
+		while (true) {	
 			TaiKhoan tk = new TaiKhoan();
 			tk.nhapTaiKhoan();
+			int role = tk.checkDangNhap(dsTaiKhoan);
 			boolean isLogOut = false;
-			List<Lop> dsLop = new ArrayList<>();
-			
-			if("giaovu".equals(tk.getUsername()) && "giaovu".equals(tk.getPassword())) {
+			if(role == 1) {
 				while(!isLogOut) {
 					System.out.println("================Giáo vụ===============");
 					System.out.println("01. Import danh sách lớp");
@@ -28,6 +34,7 @@ public class Main {
 					System.out.println("08. Xem bảng điểm");
 					System.out.println("09. Sửa điểm");
 					System.out.println("10. Đăng xuất");
+					System.out.println("11. Đổi mật khẩu");
 					System.out.print("Bạn chọn: ");
 					Scanner input = new Scanner(System.in);
 					int chon = input.nextInt();
@@ -43,6 +50,7 @@ public class Main {
 							System.out.println("Import thành công!");
 							l.nhapTenLop();
 							dsLop.add(l);
+							dsTaiKhoan = l.genTaiKhoan(dsTaiKhoan);
 						}
 						else {
 							System.out.println("Import thất bại!");
@@ -63,6 +71,7 @@ public class Main {
 								if(tenLop.equals(temp.getTenLop())){
 									temp.themSinhVien(sv);
 									check = true;
+									dsTaiKhoan = temp.genTaiKhoan(dsTaiKhoan);
 									break;
 								}
 							}
@@ -150,6 +159,107 @@ public class Main {
 							System.out.println();
 						}
 						break;
+					case 6:
+						System.out.println("================Giáo vụ===============");
+						System.out.println("==========Xem thời khoá biểu==========");
+						Scanner sc6= new Scanner(System.in);
+						System.out.println("Nhập tên lớp: ");
+						String tenLop6 = sc6.nextLine();
+						if(isExistLop(tenLop6, dsLop)) {
+							for(Lop lop : dsLop) {
+								if(tenLop6.equals(lop.getTenLop())) {
+									if(lop.getTkb() != null) {
+										lop.getTkb().inThoiKhoaBieu();
+									} else {
+										System.out.println("Lớp này không có thời khoá biểu!");
+									}
+								}
+							}
+						} else {
+							System.out.println("Lớp không tồn tại!");
+						}
+						break;
+					case 7:
+						System.out.println("================Giáo vụ===============");
+						System.out.println("===========Import bảng điểm===========");
+						Scanner sc7= new Scanner(System.in);
+						System.out.println("Nhập tên lớp: ");
+						String tenLop7 = sc7.nextLine();
+						if(isExistLop(tenLop7, dsLop)) {
+							BangDiem bd = new BangDiem(); 
+							FileCSV fBd = new FileCSV();
+							fBd.nhapPathImport();
+							bd = fBd.importBangDiemCSV();
+							for(Lop lop : dsLop) {
+								if(tenLop7.equals(lop.getTenLop())) {
+									lop.setBd(bd);
+									System.out.println("Import thành công!");
+								}
+							}
+						} else {
+							System.out.println("Lớp không tồn tại!");
+						}
+						break;
+					case 8:
+						System.out.println("================Giáo vụ===============");
+						System.out.println("==========Xem lại bảng điểm===========");
+						Scanner sc8= new Scanner(System.in);
+						System.out.println("Nhập tên lớp: ");
+						String tenLop8 = sc8.nextLine();
+						if(isExistLop(tenLop8, dsLop)) {
+							for(Lop lop : dsLop) {
+								if(tenLop8.equals(lop.getTenLop())) {
+									if(lop.getBd() != null) {
+										lop.getBd().inBangDiem();
+										System.out.println("Thống kê");
+										lop.getBd().thongKe();
+									} else {
+										System.out.println("Lớp này chưa có bảng điểm!");
+									}
+								}
+							}
+						} else {
+							System.out.println("Lớp không tồn tại!");
+						}
+						break;
+					case 9:
+						System.out.println("================Giáo vụ===============");
+						System.out.println("============Sửa bảng điểm=============");
+						Scanner sc9= new Scanner(System.in);
+						System.out.println("Nhập tên lớp: ");
+						String tenLop9 = sc9.nextLine();
+						if(isExistLop(tenLop9, dsLop)) {
+							for(Lop lop : dsLop) {
+								if(tenLop9.equals(lop.getTenLop())) {
+									if(lop.getBd() != null) {
+										System.out.println("Nhập MSSV: ");
+										Long mssv = Long.parseLong(sc9.nextLine());
+										Iterator<Entry<Integer, Diem>> iter = lop.getBd().getDanhSach().entrySet().iterator();
+										boolean check = false;
+										while(iter.hasNext()) {
+											Entry<Integer, Diem> entry = iter.next();
+											if(mssv == entry.getValue().getMssv()) {
+												Diem d = new Diem();
+												d.setMssv(mssv);
+												d.setHoTen(entry.getValue().getHoTen());
+												d.nhapDiem();
+												entry.setValue(d);
+												System.out.println("Sửa điểm thành công ");
+												check = true;
+											}
+										}
+										if(check == false) {
+											System.out.println("Lỗi! Không sửa được điểm!");
+										}
+									} else {
+										System.out.println("Lớp này chưa có bảng điểm!");
+									}
+								}
+							}
+						} else {
+							System.out.println("Lớp không tồn tại!");
+						}
+						break;
 					case 10:
 						isLogOut = true;
 						System.out.println("Đã đăng xuất.");
@@ -160,8 +270,8 @@ public class Main {
 					}
 				}
 			}
-			else if(1==2) {
-				
+			else if(role == 2) {
+				System.out.println("SV");
 			}
 			else {
 				System.out.println("Tài khoản không tồn tại. Vui lòng đăng nhập lại!");
@@ -195,13 +305,13 @@ public class Main {
 	
 	public static List<Lop> genLopTheoTkb(Lop l, List<Lop> ds){
 		List<Lop> kq = ds;
-		HashMap<Integer, SinhVien> dsSinhVien = new HashMap<>();
-		dsSinhVien.putAll(l.getDanhSach());
 		Iterator<Entry<Integer, MonHoc>> iter = l.getTkb().getDanhSach().entrySet().iterator();
 		while(iter.hasNext()) {
 			Entry<Integer, MonHoc> entry = iter.next();
 			MonHoc mh = entry.getValue();
 			Lop temp = new Lop();
+			HashMap<Integer, SinhVien> dsSinhVien = new HashMap<Integer, SinhVien>();
+			dsSinhVien.putAll(l.getDanhSach());
 			String tenLop = l.getTenLop() + "-" + mh.getMaMon();
 			temp.setDanhSach(dsSinhVien);
 			temp.setTenLop(tenLop);

@@ -102,4 +102,22 @@ public class Lop {
 		System.out.println("Nhập tên lớp ");
 		this.tenLop = input.nextLine();
 	}
+	
+	public List<TaiKhoan> genTaiKhoan(List<TaiKhoan> ds) {
+		List<TaiKhoan> kq = ds;
+		Iterator<Entry<Integer, SinhVien>> iter = this.getDanhSach().entrySet().iterator();
+		while( iter.hasNext()) {
+			Entry<Integer, SinhVien> entry = iter.next();
+			SinhVien sv = entry.getValue();
+			TaiKhoan temp = new TaiKhoan();
+			String mssv = String.valueOf(sv.getMssv());
+			temp.setUsername(mssv);
+			temp.setPassword(mssv);
+			temp.setRole("sv");
+			if(!temp.checkExist(ds)) {
+				kq.add(temp);
+			}
+		}
+		return kq;
+	}
 }

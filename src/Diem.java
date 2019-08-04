@@ -1,6 +1,7 @@
+import java.util.Scanner;
 
 public class Diem {
-	private Long mssv;
+	private long mssv;
 	private String hoTen;
 	private double diemGK;
 	private double diemCK;
@@ -8,10 +9,10 @@ public class Diem {
 	private double tongDiem;
 	
 	
-	public Long getMssv() {
+	public long getMssv() {
 		return mssv;
 	}
-	public void setMssv(Long mssv) {
+	public void setMssv(long mssv) {
 		this.mssv = mssv;
 	}
 	public String getHoTen() {
@@ -47,5 +48,17 @@ public class Diem {
 	
 	public void inDiem() {
 		System.out.print("MSSV: "+ this.mssv + ", Họ tên: " + this.hoTen + ", Điểm GK: " + this.diemCK + ", Điểm CK: " + this.diemCK + ", Điểm khác: " + this.diemKhac + ", Điểm tổng: " + this.tongDiem);;
+	}
+	
+	public void nhapDiem() {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Nhập điểm giữa kỳ: ");
+		this.diemGK = Double.parseDouble(input.nextLine());
+		System.out.println("Nhập điểm cuối kỳ: ");
+		this.diemCK = Double.parseDouble(input.nextLine());
+		System.out.println("Nhập điểm khác: ");
+		this.diemKhac = Double.parseDouble(input.nextLine());
+		System.out.println("Nhập điểm tổng: ");
+		this.tongDiem = Double.parseDouble(input.nextLine());
 	}
 }

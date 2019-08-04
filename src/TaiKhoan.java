@@ -1,8 +1,19 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class TaiKhoan {
 	private String username;
 	private String password;
+	private String role;
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -26,5 +37,35 @@ public class TaiKhoan {
 		this.username = username;
 		this.password = password;
 		return this;
+	}
+	
+	public int checkDangNhap(List<TaiKhoan> ds) {
+		int kq = 0; // dang nhap sai
+		for(TaiKhoan tk : ds) {
+			if(this.username.equals(tk.getUsername()) && this.password.equals(tk.getPassword())) {
+				String role = this.role;
+				if("sv".equals(tk.getRole())) {
+					kq = 2;
+				}
+				else if("giaovu".equals(tk.getRole())) {
+					kq = 1;
+				}
+				else {
+					kq = 0;
+				}
+			}
+		}
+		return kq;
+	}
+	
+	public boolean checkExist(List<TaiKhoan> ds) {
+		boolean kq = false;
+		for(TaiKhoan tk : ds) {
+			if(this.username.equals(tk.getUsername())) {
+				kq = true;
+				break;
+			}
+		}
+		return kq;
 	}
 }
