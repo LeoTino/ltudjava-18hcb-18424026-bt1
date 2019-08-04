@@ -7,11 +7,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class FileCSV {
 	private String pathImport;
 	//private String pathExport;
 
+	public void nhapPathImport() {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Nhập đường dẫn: ");
+		this.pathImport = input.nextLine();
+	}
 	
 	public Lop importLopCSV() throws FileNotFoundException {
 		Lop kq = new Lop();
