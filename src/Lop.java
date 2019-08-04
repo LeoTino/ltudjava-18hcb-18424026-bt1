@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
 public class Lop {
-	private Map<Integer,SinhVien> danhSach;
+	private HashMap<Integer,SinhVien> danhSach;
 	private String monHoc;
 	private String tenLop;
 	private ThoiKhoaBieu tkb;
@@ -18,12 +19,18 @@ public class Lop {
 	public void setTkb(ThoiKhoaBieu tkb) {
 		this.tkb = tkb;
 	}
-
-	public Map<Integer, SinhVien> getDanhSach() {
+	
+	public HashMap<Integer, SinhVien> getDanhSach() {
 		return danhSach;
 	}
-	public void setDanhSach(Map<Integer, SinhVien> danhSach) {
+	public void setDanhSach(HashMap<Integer, SinhVien> danhSach) {
 		this.danhSach = danhSach;
+	}
+	public BangDiem getBd() {
+		return bd;
+	}
+	public void setBd(BangDiem bd) {
+		this.bd = bd;
 	}
 	public String getMonHoc() {
 		return monHoc;
@@ -45,6 +52,30 @@ public class Lop {
 		    System.out.print("STT: "+ key +", ");
 		    value.inSinhVien();
 		    System.out.println();
+		}
+	}
+	
+	public boolean isSinhVienTrongLop(SinhVien sv) {
+		boolean kq = false;
+		Iterator<Entry<Integer, SinhVien>> iter = this.getDanhSach().entrySet().iterator();
+		while(iter.hasNext()) {
+			Entry<Integer, SinhVien> temp = iter.next();
+			long mssv = temp.getValue().getMssv();
+			if(sv.getMssv() == mssv) {
+				kq = true;
+				break;
+			}
+		}
+		return kq;
+	}
+	
+	public void xoaSinhVien(SinhVien sv) {
+		Iterator<Entry<Integer, SinhVien>> iter = this.getDanhSach().entrySet().iterator();
+		while(iter.hasNext()) {
+			Entry<Integer, SinhVien> temp = iter.next();
+			if(temp.getValue().getMssv() == sv.getMssv()) {
+				iter.remove();
+			}
 		}
 	}
 	

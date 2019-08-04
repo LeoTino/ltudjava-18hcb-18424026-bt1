@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -109,6 +110,37 @@ public class Main {
 						dsLop = genLopTheoTkb(lTemp, dsLop);
 						break;
 					case 4:
+						System.out.println("================Giáo vụ===============");
+						System.out.println("=========Huỷ/Đăng kí môn học==========");
+						Scanner sc4= new Scanner(System.in);
+						System.out.println("Nhập tên lớp: ");
+						String tenLop4 = sc4.nextLine();
+						if(isExistLop(tenLop4, dsLop)) {
+							System.out.println("Nhập mã môn học: ");
+							String maMon = sc4.nextLine();
+							String tenLopMon = tenLop4.concat("-").concat(maMon);
+							if(isExistLop(tenLopMon, dsLop)) {
+								SinhVien sv4 = new SinhVien();
+								System.out.println("Nhập thông tin sinh viên");
+								sv4.nhapSinhVien();
+								for(Lop lop4 : dsLop) {
+									if(lop4.getTenLop().equals(tenLopMon)) {
+										if(lop4.isSinhVienTrongLop(sv4)) {
+											lop4.xoaSinhVien(sv4);
+											System.out.println("Đã huỷ sinh viên khỏi môn học này!");
+										} else {
+											lop4.themSinhVien(sv4);
+											System.out.println("Đã thêm sinh viên vào môn học này!");
+										}
+									}
+								}
+							} else {
+								System.out.println("Không có môn học này!");
+							}
+						} else {
+							System.out.println("Lớp không tồn tại!");
+						}
+						break;
 					case 5:
 						System.out.println("================Giáo vụ===============");
 						System.out.println("==========Xem danh sách lớp===========");
@@ -163,13 +195,15 @@ public class Main {
 	
 	public static List<Lop> genLopTheoTkb(Lop l, List<Lop> ds){
 		List<Lop> kq = ds;
+		HashMap<Integer, SinhVien> dsSinhVien = new HashMap<>();
+		dsSinhVien.putAll(l.getDanhSach());
 		Iterator<Entry<Integer, MonHoc>> iter = l.getTkb().getDanhSach().entrySet().iterator();
 		while(iter.hasNext()) {
 			Entry<Integer, MonHoc> entry = iter.next();
 			MonHoc mh = entry.getValue();
 			Lop temp = new Lop();
 			String tenLop = l.getTenLop() + "-" + mh.getMaMon();
-			temp.setDanhSach(l.getDanhSach());
+			temp.setDanhSach(dsSinhVien);
 			temp.setTenLop(tenLop);
 		    temp.setMonHoc(mh.getMaMon());
 			if(!temp.isExist(ds)) {				

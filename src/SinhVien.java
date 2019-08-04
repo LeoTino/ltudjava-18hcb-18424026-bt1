@@ -1,12 +1,12 @@
 import java.util.Scanner;
 
 public class SinhVien {
-	private Long mssv;
+	private long mssv;
 	private String hoTen;
 	private String gioiTinh;
 	private String cmnd;
 	
-	public Long getMssv() {
+	public long getMssv() {
 		return mssv;
 	}
 	public void setMssv(Long mssv) {

@@ -22,7 +22,7 @@ public class FileCSV {
 	public Lop importLopCSV() throws FileNotFoundException {
 		Lop kq = new Lop();
 		BufferedReader br = null;
-		Map<Integer, SinhVien> dsLop = new HashMap<>();
+		HashMap<Integer, SinhVien> dsLop = new HashMap<>();
         try {   
             br = new BufferedReader(new FileReader(this.pathImport));
 
