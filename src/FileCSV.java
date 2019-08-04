@@ -42,14 +42,10 @@ public class FileCSV {
                 
                 dsLop.put(stt, sv);
             }
+            br.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //e.printStackTrace();
+        	System.out.println("Đường dẫn không tồn tại!");
         }
         kq.setDanhSach(dsLop);
 		return kq;
@@ -78,14 +74,10 @@ public class FileCSV {
                 Map<Integer,MonHoc> map = new HashMap<>();
                 dsMon.put(stt, mh);
             }
+            br.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //e.printStackTrace();
+            System.out.println("Đường dẫn không tồn tại!");
         }
         kq.setDanhSach(dsMon);
 		return kq;
@@ -118,14 +110,10 @@ public class FileCSV {
                 Map<Integer, Diem> map = new HashMap<>();
                 bangDiem.put(stt, d);
             }
+            br.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //e.printStackTrace();
+            System.out.println("Đường dẫn không tồn tại!");
         }
         kq.setDanhSach(bangDiem);
 		return kq;

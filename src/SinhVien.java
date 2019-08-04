@@ -1,9 +1,10 @@
+import java.util.Scanner;
 
 public class SinhVien {
 	private Long mssv;
-	String hoTen;
-	String gioiTinh;
-	String cmnd;
+	private String hoTen;
+	private String gioiTinh;
+	private String cmnd;
 	
 	public Long getMssv() {
 		return mssv;
@@ -32,5 +33,17 @@ public class SinhVien {
 	
 	public void inSinhVien() {
 		System.out.print("MSSV: "+ this.mssv + ", Họ tên: " + this.hoTen + ", Giới tính: " + this.gioiTinh + ", CMND: " + this.cmnd);
+	}
+	
+	public void nhapSinhVien() {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Nhập MSSV: ");
+		this.mssv = Long.parseLong(input.nextLine());
+		System.out.println("Nhập họ và tên: ");
+		this.hoTen = input.nextLine();
+		System.out.println("Nhập giới tính: ");
+		this.gioiTinh = input.nextLine();
+		System.out.println("Nhập số CMND: ");
+		this.cmnd = input.nextLine();
 	}
 }

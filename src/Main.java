@@ -1,7 +1,9 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class Main {
@@ -10,6 +12,7 @@ public class Main {
 			TaiKhoan tk = new TaiKhoan();
 			tk.nhapTaiKhoan();
 			boolean isLogOut = false;
+			List<Lop> dsLop = new ArrayList<>();
 			
 			if("giaovu".equals(tk.getUsername()) && "giaovu".equals(tk.getPassword())) {
 				while(!isLogOut) {
@@ -31,15 +34,98 @@ public class Main {
 					case 1:
 						System.out.println("================Giáo vụ===============");
 						System.out.println("=========Import danh sách lớp=========");
-						
+						Lop l = new Lop(); 
+						FileCSV fLop = new FileCSV();
+						fLop.nhapPathImport();
+						l = fLop.importLopCSV();
+						if(!l.getDanhSach().isEmpty()) {
+							System.out.println("Import thành công!");
+							l.nhapTenLop();
+							dsLop.add(l);
+						}
+						else {
+							System.out.println("Import thất bại!");
+						}
+						break;
+					case 2:
+						System.out.println("================Giáo vụ===============");
+						System.out.println("==========Thêm một sinh viên==========");
+						System.out.println("Nhập lớp của sinh viên: ");
+						Scanner sc2 = new Scanner(System.in);
+						String tenLop = sc2.nextLine();
+						if(isExistLop(tenLop, dsLop)) {
+							System.out.println("Nhập thông tin của sinh viên");
+							SinhVien sv = new SinhVien();
+							sv.nhapSinhVien();
+							boolean check = false;
+							for(Lop temp : dsLop) {
+								if(tenLop.equals(temp.getTenLop())){
+									temp.themSinhVien(sv);
+									check = true;
+									break;
+								}
+							}
+							if(check) {
+								System.out.println("Thêm thành công!");
+							}
+							else {
+								System.out.println("Thêm sinh viên thất bại!");
+							}
+						}
+						else {
+							System.out.println("Lớp không tồn tại!");
+						}
+						break;
+					case 3:
+						System.out.println("================Giáo vụ===============");
+						System.out.println("=========Import thời khoá biểu========");
+						System.out.println("Nhập lớp của thời khoá biểu: ");
+						Scanner sc3 = new Scanner(System.in);
+						String tenLop3 = sc3.nextLine();
+						Lop lTemp = new Lop();
+						if(isExistLop(tenLop3, dsLop)) {
+							ThoiKhoaBieu tkb = new ThoiKhoaBieu(); 
+							FileCSV fTkb = new FileCSV();
+							fTkb.nhapPathImport();
+							tkb = fTkb.importTKBCSV();
+							if(!tkb.getDanhSach().isEmpty()) {
+								System.out.println("Import thành công!");
+								Iterator<Lop> iter = dsLop.iterator();
+								while(iter.hasNext()) {
+									Lop lop = iter.next();
+									if(tenLop3.equals(lop.getTenLop())) {
+										lop.setTkb(tkb);
+										lTemp = lop;
+									}
+								}
+							}
+							else {
+								System.out.println("Import thất bại!");
+							}
+						}
+						else {
+							System.out.println("Lớp không tồn tại!");
+						}
+						dsLop = genLopTheoTkb(lTemp, dsLop);
+						break;
+					case 4:
+					case 5:
+						System.out.println("================Giáo vụ===============");
+						System.out.println("==========Xem danh sách lớp===========");
+						for(Lop lop : dsLop) {
+							System.out.println(lop.getTenLop());
+							lop.inDanhSachLop();
+							System.out.println();
+						}
 						break;
 					case 10:
 						isLogOut = true;
 						System.out.println("Đã đăng xuất.");
+						break;
 					default:
-						System.out.println("Vui lòng nhập vào một số theo menu!");
+						System.out.println("Chọn bậy!");
+						break;
 					}
-					//isLogOut = true;
 				}
 			}
 			else if(1==2) {
@@ -49,6 +135,7 @@ public class Main {
 				System.out.println("Tài khoản không tồn tại. Vui lòng đăng nhập lại!");
 			}
 		}
+		
 		
 		
 		/*
@@ -70,23 +157,36 @@ public class Main {
 		 * fBangDiem.setPathImport("BangDiem.csv"); bd = fBangDiem.importBangDiemCSV();
 		 * bd.inBangDiem();
 		 */
+		 
     }
 	
 	
 	public static List<Lop> genLopTheoTkb(Lop l, List<Lop> ds){
-		List<Lop> kq = new ArrayList<>();
-		ThoiKhoaBieu tkb = l.getTkb();
-		for (Map.Entry<Integer, MonHoc> entry : l.getTkb().getDanhSach().entrySet()) {
+		List<Lop> kq = ds;
+		Iterator<Entry<Integer, MonHoc>> iter = l.getTkb().getDanhSach().entrySet().iterator();
+		while(iter.hasNext()) {
+			Entry<Integer, MonHoc> entry = iter.next();
 			MonHoc mh = entry.getValue();
-			if(!l.isExist(ds)) {
-				Lop temp = new Lop();
-				temp.setDanhSach(l.getDanhSach());
-				temp.setTenLop(l.getTenLop());
-			    temp.setMonHoc(mh.getMaMon());
+			Lop temp = new Lop();
+			String tenLop = l.getTenLop() + "-" + mh.getMaMon();
+			temp.setDanhSach(l.getDanhSach());
+			temp.setTenLop(tenLop);
+		    temp.setMonHoc(mh.getMaMon());
+			if(!temp.isExist(ds)) {				
 			    kq.add(temp);
 			}
 		}
 		
+		return kq;
+	}
+	
+	public static boolean isExistLop(String tenLop, List<Lop> ds) {
+		boolean kq = false;
+		for(Lop l : ds) {
+			if(tenLop.equals(l.getTenLop())) {
+				kq = true;
+			}
+		}
 		return kq;
 	}
 }

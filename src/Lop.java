@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Map.Entry;
 
 public class Lop {
@@ -63,5 +64,11 @@ public class Lop {
 			}
 		}
 		return kq;
+	}
+	
+	public void nhapTenLop() {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Nhập tên lớp ");
+		this.tenLop = input.nextLine();
 	}
 }
